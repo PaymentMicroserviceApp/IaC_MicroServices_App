@@ -9,11 +9,11 @@ variable "secret_key" {
 }
 
 variable "database_username"{
-  description = "The username for the MySQL database"
+  description = "The username for the Postgres database"
   type        = string
 }
 
 variable "database_password"{
-  description = "The password for the MySQL database"
+  description = "The password for the Postgres database"
   type        = string
 }

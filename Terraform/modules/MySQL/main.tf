@@ -16,15 +16,15 @@ resource "aws_security_group" "sg-mysql" {
   }
 }
 
-resource "aws_db_instance" "mysql" {
-  engine = "mysql"
-  engine_version = "5.7"
+resource "aws_db_instance" "postgres" {
+  engine = "postgres"
+  engine_version = "14"
   instance_class = "db.t3.micro"
 
   storage_type = "gp2"
   allocated_storage = 20
-  identifier = "mysql-db"
-  db_name = "db_operation"
+  identifier = "postgres-db"
+  db_name = "db_invoice"
 
   skip_final_snapshot          = true
   multi_az                     = false
