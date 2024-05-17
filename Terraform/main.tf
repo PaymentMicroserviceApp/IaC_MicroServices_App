@@ -1,7 +1,6 @@
 
 data "aws_availability_zones" "available_zones" {}
 
-
 resource "aws_vpc" "infrastructure_vpc" {
   cidr_block = var.vpc_cdir
   enable_dns_support = true
@@ -58,4 +57,12 @@ module "MongoDB" {
   database_username = ""
   vpc_id = aws_vpc.infrastructure_vpc.id
   db_subnet_group_name = aws_db_subnet_group.db_subnet_group.id
+}
+
+ module "ECR_Repositories"{
+  source = "./modules/ECR"
+  for_each = var.repository_names
+  repository_name = each.key
+  access_key = ""
+  secret_key = ""
 }
