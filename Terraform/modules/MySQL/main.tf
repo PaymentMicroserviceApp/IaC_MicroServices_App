@@ -7,14 +7,17 @@ provider "aws" {
 resource "aws_security_group" "sg-mysql" {
   name        = "sg-mysql"
   description = "Allow MySQL inbound traffic"
+  vpc_id      = var.vpc_id
 
   ingress {
     from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    #security_groups = [] - security group of the EKS
   }
 }
+
 
 resource "aws_db_instance" "mysql" {
   engine = "mysql"
@@ -34,7 +37,7 @@ resource "aws_db_instance" "mysql" {
   performance_insights_enabled = false
 
   vpc_security_group_ids = [aws_security_group.sg-mysql.id]
-
+  db_subnet_group_name = var.db_subnet_group_name
 
   tags = {
     project = "IaC_Microservices_App"
@@ -43,7 +46,5 @@ resource "aws_db_instance" "mysql" {
 
   username = var.database_username
   password = var.database_password
-
-
 
 }

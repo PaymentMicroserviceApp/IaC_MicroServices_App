@@ -7,12 +7,14 @@ provider "aws" {
 resource "aws_security_group" "sg-postgres" {
   name        = "sg-postgres"
   description = "Allow Postgres inbound traffic"
+  vpc_id      = var.vpc_id
 
   ingress {
     from_port   = 5432
     to_port     = 5432
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    #security_groups = [] - security group of the EKS
   }
 }
 
@@ -34,6 +36,7 @@ resource "aws_db_instance" "postgres" {
   performance_insights_enabled = false
 
   vpc_security_group_ids = [aws_security_group.sg-postgres.id]
+  db_subnet_group_name = var.db_subnet_group_name
 
   tags = {
     project = "IaC_Microservices_App"
