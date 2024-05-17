@@ -9,6 +9,12 @@ variable "resource_group_location" {
   description = "Location of the resource group"
 }
 
+variable "repository_names"{
+  type = list(string)
+  default = ["my-repo"]
+  description = "List of repository names"
+}
+
 variable "ec2_user_data" {
   type = string
   description = "User data to be executed on the EC2 instance"
